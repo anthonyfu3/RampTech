@@ -6,18 +6,19 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.views.generic.base import RedirectView
 from hello_world.core import views as core_views
+from aircraft.views import unit1_notes_table, unit1_notes_view
+
 
 urlpatterns = [
     # Redirect root URL to login
     path("", RedirectView.as_view(url='/login/', permanent=True), name='home'),
-
-    # Protect the index view with login_required
     path("index/", login_required(core_views.index), name='index'),
-
     path("admin/", admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('unit1notes/', unit1_notes_view, name='unit1notes'),
+    path('unit1notes/table/', unit1_notes_table, name='unit1notes_table'),
 ]
 
 if settings.DEBUG:
