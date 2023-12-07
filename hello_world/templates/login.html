@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <!-- Title at the top of the page -->
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center mt-4">Ramp Tech Assistant</h2>
+        </div>
+    </div>
+
+    <!-- Centered login form -->
+    <div class="row justify-content-center align-items-center" style="height: 70vh;">
+        <div class="col-md-4">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-custom-dark btn-block">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
