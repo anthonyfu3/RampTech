@@ -1,0 +1,119 @@
+admin and adminpassword 
+fueler and fuelerpassword
+
+Tables:
+Unit one table
+    Notes table (dynamic table which can be edit and move using bootstrap)
+    table information for displaying, editing, and deleting
+        Button for adding notes will open smaller pop up windown in the page to add a new aircraft note and all its related data.
+
+        Tail Number: a letter numeric value input such as, N123AB , XAMEF, C6ACS
+        Status: selectable options; 
+            incoming, departing, quickturn, Off-Ramp, standby, maintanice, overnight.
+            when in incoming or off-ramp selectide it will be a link redirect to tracking webpages when click 
+        Service Time: display the relevant time based on status.
+            status; what to display
+            incoming; estimated time of arrival(ETA)
+            departing; departure time
+            quickturn; ETA 
+            off ramp; last departure date 
+            standby; following departure date
+            maintanice; following departure date
+            overnight; estimatited time of departure (for the following date)
+        Location: selectable options
+            Hanger; 1, 2, 3, and 4 (display as H1, H2...)
+            Storage; R(row)1, R5, R6, Tie-Down, Gama.
+            Active Rows-Spots: 2-1 to 2-5, 3-1 to 3-5, 4-1 to 4-4.
+            Others: Off-Ramp, Customs, NetJets, H1-East, H1-West, R1|R2, R2|R3, R3|R4, R4|SR, HS|R5, R5|R6.
+        Aircraft Model: manual input alpha numerica value
+        Estimated date and time of arrival: date and time values
+        Estimated date and time of departure: data and time values or will advise blank mode
+        Passenger: number value
+        Transportation: selectable value;
+            Driver, Personal, Ride-share, Rental, self arrenged, none, and other(with input for short notes)
+        Fuel: display (qty)(format)(type)
+            Quantity (qty); numeric value
+            Format; pounds(LBs), Kilograms(KGs), Gallons (Gs)
+            Type; Jet-A Negative(Jet-), Jet-A Positive (Jet+) and Avgas (Av)
+        Lav: selectible options; display (statust)(Type)
+            status: None, Fwr, aft, fwr & aft, completed
+            type: full, dump, or rinse
+            gallons: numeric number
+        water service: status; active, completed.
+        GPU: stage, active, completed.
+        catering: status (active, completed), cat number 
+        Paper, ice and/or coffee(PIC):PIC, PI, PC, IC, I, P, note(short note input)
+        Customer Type: Based tenant, signature status(silver, gold, platinum) 
+        Oil: status; display (status)(type)(qty)
+        Ladder: Active, completed
+        vacuum: Active, Completed
+        Other services: small note input
+        Notes: small note input 
+        Note ID: unique Identifier(for multiple notes on same customer)
+        Action: row for button to modify or delete the individual aircraft note.
+
+Dispatch interactive table
+    unit one tables but only for viewing 
+selectable services Display Table
+    tables for displaying services by type 
+Fuel Truck "jet-A/Av-gas" Table
+    Jet-A Table
+    Title: Fuel Unit Balancing and Reconcilliation Record 
+    QC and Truck info data input rows: 
+        Differential Pressure(PSI)-number 
+        GPM-number
+        nozzle pressure-number
+        PreCheck-S, inclomplete
+        capacity-7000, 5000, 1000
+        Fuel Type- Jet-A, AVGas, Auto and Diesel
+        Unit #-number
+        Date-date.
+    Individual Fueling rows:
+        ASR/Ticket Number- Numeric value 
+        Customer- Retail, Signature.
+        A/C Type- alpha numeric values, prop, jet
+        Tail #- alpha numeric values
+        Meter #1- numeric
+        gallons(Meter 1)- numeric
+        Meter #2- numeric
+        Gallons (meter 2)- numeric
+        Total Gallons - GM1 + GM2
+        Into Unit - Numeric 
+        Running Balance - Numeric
+        Prist- Yes, No
+        Fueler- Initial Letter input
+        On Time- time
+        Off Time- time
+    Staring and Ending data rows:
+        Start Meter 1 - Numeric
+        Start Meter 2- Numeric
+        meter total 1- numeric calculated
+        meter total 2- numeric calculated
+        Begining Balance - Numeric
+        Filled- Numeric calculated
+        Pumped- Numeric Calaulated
+        Sumped- numeric
+        Book Inventory- numeric calculated
+        Physical Inventory- Numeric
+        Varianc- Numeric calculated
+        Initials- Letters 
+    Table features:
+        Sump input
+        QC Daily Check
+        Add Fueling 
+        Daily Closing and Review
+
+Fuel Farm " " Table
+
+Auto Tank Table
+
+Diesel Tank Table 
+
+Utilities and features.
+    the table will display daily information with the ability to choose other dates. 
+    above the table will dispay Unit One:name Date:current date on a date selector; and a table selector with the notes table being the defualt.
+    dark mode swich at the bottom of the page.
+    dynamic table searching, sorting, pagination .
+    fit for phone and tablets. 
+    tracking aircraft search options that open or redirect to a tracking website for airport or individual aircraft.
+Admin Dashboard

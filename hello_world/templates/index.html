@@ -1,25 +1,31 @@
-{% load django_browser_reload %}
-{% load static %}
+{% extends "base.html" %}
+{% block content %}
 
-<!doctype html>
-<html lang="en">
-
-<head>
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="{% static 'main.css' %}">
-</head>
-
-<body>
-    <div class="App">
-        <header class="App-header">
-            <p>
-                GitHub Codespaces <span class="heart">♥️</span> Django
-            </p>
-            <p class="small">
-                Edit <code>hello_world/templates/index.html</code> and see changes live!
-            </p>
-        </header>
+<div class="container mt-4">
+    <!-- Title in the center and larger -->
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 class="display-4">Ramp Tech Assistant Index</h1>
+        </div>
     </div>
-</body>
 
-</html>
+    <!-- Section for tables and selection -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-center">Tables</h2>
+            <div class="text-center mt-3">
+                <label for="tableSelect" class="form-label">Choose a Table:</label>
+                <select class="form-select" id="tableSelect" style="width: auto; margin: auto;">
+                    <option selected>Choose...</option>
+                    <option value="unit1Notes">Unit 1 Notes</option>
+                    <option value="services">Services</option>
+                    <option value="fueling">Fueling</option>
+                    <option value="arrivals">Arrivals</option>
+                    <option value="overview">Overview</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
