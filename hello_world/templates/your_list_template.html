@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Aircraft Notes</h2>
+    <ul>
+        {% for note in notes %}
+            <li>{{ note.tail_number }} - {{ note.status }}</li>  <!-- Display fields as needed -->
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

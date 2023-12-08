@@ -84,6 +84,14 @@ class AircraftNote(models.Model):
         ('signature_platinum', 'Signature Status Platinum'),
     ]
 
+    TRANSPORTATION_STATUS_CHOICES = [
+        ('none', 'None'),
+        ('driver', 'Driver'),
+        ('rental', 'Rental'),
+        ('self-park', 'Self-Park'),
+        ('Ride Share', 'Ride Share'),
+    ]
+    
     CATERING_STATUS_CHOICES = [
         ('none', 'None'),
         ('active', 'Active'),
@@ -126,6 +134,7 @@ class AircraftNote(models.Model):
     lav_gallons = models.IntegerField(null=True, blank=True)
     water_service_status = models.CharField(max_length=10, choices=WATER_SERVICE_STATUS_CHOICES, null=True, blank=True)
     gpu_status = models.CharField(max_length=10, choices=GPU_STATUS_CHOICES, null=True, blank=True)
+    transportation_status = models.CharField(max_length=10, choices=TRANSPORTATION_STATUS_CHOICES, null=True, blank=True)
     catering_status = models.CharField(max_length=10, choices=CATERING_STATUS_CHOICES, null=True, blank=True)
     catering_number = models.CharField(max_length=50, null=True, blank=True)
     pic = models.CharField(max_length=50, null=True, blank=True)  # PIC stands for Paper, Ice, Coffee
