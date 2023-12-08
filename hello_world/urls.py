@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.views.generic.base import RedirectView
+from aircraft import views
 from hello_world.core import views as core_views
 from aircraft.views import unit1_notes_table, unit1_notes_view
 
@@ -19,6 +20,9 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('unit1notes/', unit1_notes_view, name='unit1notes'),
     path('unit1notes/table/', unit1_notes_table, name='unit1notes_table'),
+    path('add-data-url/', views.add_data, name='add_data'),
+    path('add-aircraft-note/', views.aircraft_note_create, name='add_aircraft_note'),
+    path('aircraft-notes/', views.aircraft_note_list, name='aircraft_notes'),
 ]
 
 if settings.DEBUG:
