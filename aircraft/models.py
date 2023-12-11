@@ -86,6 +86,7 @@ class AircraftNote(models.Model):
 
     TRANSPORTATION_STATUS_CHOICES = [
         ('none', 'None'),
+        ('personal', 'Personal'),
         ('driver', 'Driver'),
         ('rental', 'Rental'),
         ('self-park', 'Self-Park'),
