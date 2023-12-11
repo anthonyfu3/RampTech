@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Your Site Name{% endblock %}</title>
+    <title>{% block title %}Unit One Notes{% endblock %}</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         crossorigin="anonymous">
@@ -77,24 +77,27 @@
             overflow-x: auto;
             /* Enable horizontal scrolling */
         }
-    
+
         .dark-mode {
             background-color: #343a40;
             color: #f8f9fa;
         }
-    
+
         .dark-mode .navbar {
             background-color: #212529;
         }
-    
+
         /* Specific styles for form elements in dark mode */
         .dark-mode .modal-content,
         .dark-mode .form-control {
-            background-color: #454d55; /* Dark background for form */
-            color: #f8f9fa; /* Light text color */
-            border-color: #606770; /* Adjust border color if needed */
+            background-color: #454d55;
+            /* Dark background for form */
+            color: #f8f9fa;
+            /* Light text color */
+            border-color: #606770;
+            /* Adjust border color if needed */
         }
-    
+
         /* You may also need to adjust styles for other form elements */
         .dark-mode .modal-header,
         .dark-mode .modal-body,
@@ -102,10 +105,8 @@
             background-color: #454d55;
             color: #f8f9fa;
         }
-    
-        /* ... other styles ... */
     </style>
-    
+
 </head>
 
 <body>
@@ -123,7 +124,7 @@
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
                     <label class="form-check-label" for="darkModeToggle">Dark Mode</label>
-                    
+
                 </div>
                 <!-- Larger Logout Button -->
                 {% if user.is_authenticated %}
@@ -151,8 +152,116 @@
             }
         }
     </script>
-    
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#notesTable').DataTable({
+                "order": [[0, "desc"]],
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+            });
+
+            let currentNoteId = null;
+
+
+        });
+    </script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <!-- DataTables Bootstrap 5 JS -->
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#notesTable').DataTable({
+                "order": [[0, "desc"]],
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "responsive": true
+            });
+
+            $('#notesTable tbody').on('click', '.edit-btn', function () {
+                currentNoteId = $(this).data('note-id');
+                $('#editTailNumber').val($(this).data('tail-number'));
+                $('#editServiceTime').val($(this).data('service-time'));
+                $('#editAircraftModel').val($(this).data('aircraft-model'));
+                $('#editLocation').val($(this).data('location'));
+                $('#editEta').val($(this).data('eta'));
+                $('#editEtd').val($(this).data('etd'));
+                $('#editPassengerCount').val($(this).data('passenger-count'));
+                $('#editFuelType').val($(this).data('fuel-type'));
+                $('#editFuelQty').val($(this).data('fuel-qty'));
+                $('#editFuelFormat').val($(this).data('fuel-format'));
+                $('#editLavStatus').val($(this).data('lav-status'));
+                $('#editLavType').val($(this).data('lav-type'));
+                $('#editLavGallons').val($(this).data('lav-gallons'));
+                $('#editWaterServiceStatus').val($(this).data('water-service-status'));
+                $('#editGpuStatus').val($(this).data('gpu-status'));
+                $('#editTransportationStatus').val($(this).data('transportation-status'));
+                $('#editPic').val($(this).data('pic'));
+                $('#editCateringStatus').val($(this).data('catering-status'));
+                $('#editCateringNumber').val($(this).data('catering-number'));
+                $('#editVacuumStatus').val($(this).data('vacuum-status'));
+                $('#editOilStatus').val($(this).data('oil-status'));
+                $('#editOilType').val($(this).data('oil-type'));
+                $('#editOilQty').val($(this).data('oil-qty'));
+                $('#editLadderStatus').val($(this).data('ladder-status'));
+                $('#editNotes').val($(this).data('notes'));
+                $('#editNoteModal').modal('show');
+            });
+
+            $('#saveEditButton').on('click', function () {
+                var formData = new FormData($('#editNoteForm')[0]);
+                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+                console.log("Sending FormData: ", Array.from(formData)); // Convert FormData to an array for logging
+
+                $.ajax({
+                    url: `/edit-note/${currentNoteId}/`,
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function (response) {
+                        console.log("Success Response: ", response); // Debugging
+                        $('#editNoteModal').modal('hide');
+                        alert('Note updated successfully');
+                        location.reload();
+                    },
+                    error: function (response) {
+                        console.log("Error Response: ", response); // Debugging
+                        alert('Error updating note');
+                    }
+                });
+            });
+
+            $('#deleteButton').on('click', function () {
+                if (confirm('Are you sure you want to delete this note?')) {
+                    $.ajax({
+                        url: `/delete-note/${currentNoteId}/`,
+                        type: 'POST',
+                        data: {
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'
+                        },
+                        success: function (response) {
+                            $('#editNoteModal').modal('hide');
+                            location.reload();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>

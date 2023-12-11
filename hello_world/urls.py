@@ -7,8 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.base import RedirectView
 from aircraft import views
 from hello_world.core import views as core_views
-from aircraft.views import unit1_notes_table, unit1_notes_view
-
+from aircraft.views import delete_note, edit_note, unit1_notes_table
 
 urlpatterns = [
     # Redirect root URL to login
@@ -18,11 +17,12 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('unit1notes/', unit1_notes_view, name='unit1notes'),
-    path('unit1notes/table/', unit1_notes_table, name='unit1notes_table'),
+    path('unit1table/', unit1_notes_table, name='unit1notes_table'),
     path('add-data-url/', views.add_data, name='add_data'),
     path('add-aircraft-note/', views.aircraft_note_create, name='add_aircraft_note'),
     path('aircraft-notes/', views.aircraft_note_list, name='aircraft_notes'),
+    path('edit-note/<int:note_id>/', views.edit_note, name='edit_note'),
+    path('delete-note/<int:note_id>/', delete_note, name='delete_note'),
 ]
 
 if settings.DEBUG:

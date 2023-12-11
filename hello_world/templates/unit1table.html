@@ -7,10 +7,10 @@
             <th>Tail</th>
             <th>Status</th>
             <th>Service Time</th>
-            <th>A/C Type</th>
+            <th>A/C Model</th>
             <th>Loc.</th>
             <th>ETA</th>
-            <th>ATD</th>
+            <th>ETD</th>
             <th>Pax</th>
             <th>Fuel Type</th>
             <th>Fuel QTY</th>
@@ -20,6 +20,7 @@
             <th>Lav Gal.</th>
             <th>Water Status</th>
             <th>GPU</th>
+            <th>Transp.</th>
             <th>PIC</th>
             <th>Cat.</th>
             <th>Cat. #</th>
@@ -35,71 +36,115 @@
     <tbody>
         {% for note in notes %}
         <tr>
-            <td>{{ note.created_at}}</td>
+            <td>{{ note.created_at }}</td>
             <td>{{ note.tail_number }}</td>
-            <td>{{ note.status }}</td>
+            <td>{{ note.get_status_display }}</td>
             <td>{{ note.service_time }}</td>
-            <td>{{ note.aircraft_type }}</td>
+            <td>{{ note.aircraft_model }}</td>
             <td>{{ note.location }}</td>
             <td>{{ note.eta }}</td>
-            <td>{{ note.atd }}</td>
-            <td>{{ note.passenger }}</td>
+            <td>{{ note.etd }}</td>
+            <td>{{ note.passenger_count }}</td>
             <td>{{ note.fuel_type }}</td>
             <td>{{ note.fuel_qty }}</td>
             <td>{{ note.fuel_format }}</td>
             <td>{{ note.lav_status }}</td>
             <td>{{ note.lav_type }}</td>
-            <td>{{ note.lav_gal }}</td>
-            <td>{{ note.water_status }}</td>
-            <td>{{ note.gpu }}</td>
+            <td>{{ note.lav_gallons }}</td>
+            <td>{{ note.water_service_status }}</td>
+            <td>{{ note.gpu_status }}</td>
+            <td>{{ note.transportation_status }}</td>
             <td>{{ note.pic }}</td>
-            <td>{{ note.catering }}</td>
+            <td>{{ note.catering_status }}</td>
             <td>{{ note.catering_number }}</td>
-            <td>{{ note.vacuum }}</td>
-            <td>{{ note.oil }}</td>
+            <td>{{ note.vacuum_status }}</td>
+            <td>{{ note.oil_status }}</td>
             <td>{{ note.oil_type }}</td>
             <td>{{ note.oil_qty }}</td>
-            <td>{{ note.ladder }}</td>
+            <td>{{ note.ladder_status }}</td>
             <td>{{ note.notes }}</td>
-            <td><button class="btn btn-primary edit-btn" data-note-id="{{ note.id }}">Edit</button></td>
+            <td><button class="btn btn-secondary edit-btn" data-note-id="{{ note.id }}"
+                    data-tail-number="{{ note.tail_number }}" data-service-time="{{ note.service_time }}"
+                    data-aircraft-model="{{ note.aircraft_model }}" data-location="{{ note.location }}"
+                    data-eta="{{ note.eta }}" data-etd="{{ note.etd }}"
+                    data-passenger-count="{{ note.passenger_count }}" data-fuel-type="{{ note.fuel_type }}"
+                    data-fuel-qty="{{ note.fuel_qty }}" data-fuel-format="{{ note.fuel_format }}"
+                    data-lav-status="{{ note.lav_status }}" data-lav-type="{{ note.lav_type }}"
+                    data-lav-gallons="{{ note.lav_gallons }}"
+                    data-water-service-status="{{ note.water_service_status }}" data-gpu-status="{{ note.gpu_status }}"
+                    data-transportation-status="{{ note.transportation_status }}" data-pic="{{ note.pic }}"
+                    data-catering="{{ note.catering_status }}" data-catering-number="{{ note.catering_number }}"
+                    data-vacuum-status="{{ note.vacuum_status }}" data-oil-status="{{ note.oil_status }}"
+                    data-oil-type="{{ note.oil_type }}" data-oil-qty="{{ note.oil_qty }}"
+                    data-ladder-status="{{ note.ladder_status }}" data-notes="{{ note.notes }}">Edit</button></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-<!-- DataTables Bootstrap 5 JS -->
-<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#notesTable').DataTable({
-            "order": [[0, "desc"]],
-            "paging": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "responsive": true
-        });
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const editButtons = document.querySelectorAll('.edit-btn');
-
-        editButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const noteId = this.getAttribute('data-note-id');
-                const editForm = document.getElementById('editNoteForm');
-
-                // Set the action for the form dynamically
-                editForm.action = `/edit-note/${noteId}/`;
-                // Open the edit modal
-                $('#editNoteModal').modal('show');
-            });
-        });
-    });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<!-- Edit Note Modal -->
+<div class="modal fade" id="editNoteModal" tabindex="-1" aria-labelledby="editNoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editNoteModalLabel">Edit Note</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Edit Form (You need to adjust fields according to your model) -->
+                <form id="editNoteForm" method="post">
+                    {% csrf_token %}
+                    <!-- Add form fields here, e.g., -->
+                    <input type="text" class="form-control mb-2" id="editTailNumber" name="tail_number"
+                        placeholder="Tail Number">
+                    <input type="text" class="form-control mb-2" id="editServiceTime" name="service_time"
+                        placeholder="Service Time">
+                    <input type="text" class="form-control mb-2" id="editAircraftModel" name="aircraft_model"
+                        placeholder="Aircraft Model">
+                    <input type="text" class="form-control mb-2" id="editLocation" name="location"
+                        placeholder="Location">
+                    <input type="text" class="form-control mb-2" id="editEta" name="eta" placeholder="ETA">
+                    <input type="text" class="form-control mb-2" id="editEtd" name="etd" placeholder="ETD">
+                    <input type="text" class="form-control mb-2" id="editPassengerCount" name="passenger_count"
+                        placeholder="Passenger Count">
+                    <input type="text" class="form-control mb-2" id="editFuelType" name="fuel_type"
+                        placeholder="Fuel Type">
+                    <input type="text" class="form-control mb-2" id="editFuelQty" name="fuel_qty"
+                        placeholder="Fuel QTY">
+                    <input type="text" class="form-control mb-2" id="editFuelFormat" name="fuel_format"
+                        placeholder="Fuel Format">
+                    <input type="text" class="form-control mb-2" id="editLavStatus" name="lav_status"
+                        placeholder="Lav Status">
+                    <input type="text" class="form-control mb-2" id="editLavType" name="lav_type"
+                        placeholder="Lav Type">
+                    <input type="text" class="form-control mb-2" id="editLavGallons" name="lav_gallons"
+                        placeholder="Lav Gal.">
+                    <input type="text" class="form-control mb-2" id="editWaterServiceStatus" name="water_service_status"
+                        placeholder="Water Status">
+                    <input type="text" class="form-control mb-2" id="editGpuStatus" name="gpu_status" placeholder="GPU">
+                    <input type="text" class="form-control mb-2" id="editTransportationStatus"
+                        name="transportation_status" placeholder="Transp.">
+                    <input type="text" class="form-control mb-2" id="editPic" name="pic" placeholder="PIC">
+                    <input type="text" class="form-control mb-2" id="editCatering" name="catering_status"
+                        placeholder="Cat.">
+                    <input type="text" class="form-control mb-2" id="editCateringNumber" name="catering_number"
+                        placeholder="Cat. #">
+                    <input type="text" class="form-control mb-2" id="editVacuumStatus" name="vacuum_status"
+                        placeholder="Vacuum">
+                    <input type="text" class="form-control mb-2" id="editOilStatus" name="oil_status" placeholder="Oil">
+                    <input type="text" class="form-control mb-2" id="editOilType" name="oil_type"
+                        placeholder="Oil Type">
+                    <input type="text" class="form-control mb-2" id="editOilQty" name="oil_qty" placeholder="Oil QTY">
+                    <input type="text" class="form-control mb-2" id="editLadderStatus" name="ladder_status"
+                        placeholder="Ladder">
+                    <input type="text" class="form-control mb-2" id="editNotes" name="notes" placeholder="Notes">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveEditButton">Save changes</button>
+                <button type="button" class="btn btn-danger" id="deleteButton">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
