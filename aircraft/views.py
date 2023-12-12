@@ -22,7 +22,7 @@ def aircraft_note_list(request):
     notes = AircraftNote.objects.all()
     return render(request, 'your_list_template.html', {'notes': notes})
 
-@csrf_exempt
+
 def add_data(request):
     if request.method == 'POST':
         form = AircraftNoteForm(request.POST)
@@ -39,17 +39,17 @@ def unit1_notes_table(request):
     notes = AircraftNote.objects.all()
     return render(request, 'unit1table.html', {'notes': notes})
 
+@require_POST
+@csrf_exempt
 def edit_note(request, note_id):
     note = get_object_or_404(AircraftNote, pk=note_id)
-    if request.method == 'POST':
-        form = AircraftNoteForm(request.POST, instance=note)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error', 'errors': form.errors})
-
-    return JsonResponse({'status': 'invalid request'})
+    form = AircraftNoteForm(request.POST, instance=note)
+    if form.is_valid():
+        form.save()
+        return JsonResponse({'status': 'success'})
+    else:
+        print(form.errors)  # Add this line to log form errors
+        return JsonResponse({'status': 'error', 'errors': form.errors})
 
 @require_POST
 def delete_note(request, note_id):
