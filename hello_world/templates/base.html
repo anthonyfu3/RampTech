@@ -162,61 +162,216 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Edit Form (You need to adjust fields according to your model) -->
                     <form id="editNoteForm" method="post">
                         {% csrf_token %}
-                        <!-- Add form fields here, e.g., -->
+
+                        <!-- Tail Number -->
                         <input type="text" class="form-control mb-2" id="editTailNumber" name="tail_number"
                             placeholder="Tail Number">
-                        <input type="text" class="form-control mb-2" id="editStatus" name="status" placeholder="Status">
-                        <input type="datetime-local" class="form-control mb-2" id="editServiceTime" name="service_time"
-                            placeholder="Service Time">
+
+                        <!-- Status (Dropdown) -->
+                        <div class="mb-2">
+                            <label for="editStatus">Status</label>
+                            <select class="form-control" id="editStatus" name="status">
+                                <option value="">-----</option>
+                                <option value="incoming">Incoming</option>
+                                <option value="departing">Departing</option>
+                                <option value="quickturn">Quickturn</option>
+                                <option value="off_ramp">Off-Ramp</option>
+                                <option value="standby">Standby</option>
+                                <option value="maintenance">Maintenance</option>
+                                <option value="overnight">Overnight</option>
+                            </select>
+                        </div>
+                        <!-- Service Time -->
+
+                        <!-- Aircraft Model -->
                         <input type="text" class="form-control mb-2" id="editAircraftModel" name="aircraft_model"
                             placeholder="Aircraft Model">
-                        <input type="text" class="form-control mb-2" id="editLocation" name="location"
-                            placeholder="Location">
+
+                        <!-- Location (Dropdown) -->
+                        <div class="mb-2">
+                            <label for="editLocation">Location</label>
+                            <select class="form-control" id="editLocation" name="location">
+                                <option value="">-----</option>
+                                <option value="hanger_1">H1</option>
+                                <option value="hanger_2">H2</option>
+                                <option value="hanger_3">H3</option>
+                                <option value="hanger_4">H4</option>
+                                <option value="row_1">R1</option>
+                                <option value="row_2">R2</option>
+                                <option value="row_3">R3</option>
+                                <option value="row_4">R4</option>
+                                <option value="row_5">R5</option>
+                                <option value="row_6">R6</option>
+                                <option value="tie_down">Tie Down</option>
+                                <option value="off_ramp">Off Ramp</option>
+                                <option value="customs">Customs</option>
+                                <option value="netjets">Netjets</option>
+                            </select>
+                        </div>
+
+                        <!-- ETA -->
                         <input type="datetime-local" class="form-control mb-2" id="editEta" name="eta"
                             placeholder="ETA">
+
+                        <!-- ETD -->
                         <input type="datetime-local" class="form-control mb-2" id="editEtd" name="etd"
                             placeholder="ETD">
+
+                        <!-- Passenger Count -->
                         <input type="text" class="form-control mb-2" id="editPassengerCount" name="passenger_count"
                             placeholder="Passenger Count">
-                        <input type="text" class="form-control mb-2" id="editFuelType" name="fuel_type"
-                            placeholder="Fuel Type">
+
+                        <!-- Fuel Type (Dropdown) -->
+                        <div class="mb-2">
+                            <label for="editFuelType">Fuel Type</label>
+                            <select class="form-control" id="editFuelType" name="fuel_type">
+                                <option value="">-----</option>
+                                <option value="jet_a_neg">Jet-</option>
+                                <option value="jet_a_pos">Jet+</option>
+                                <option value="avgas">Avgas</option>
+                            </select>
+                        </div>
+
+                        <!-- Fuel QTY -->
                         <input type="text" class="form-control mb-2" id="editFuelQty" name="fuel_qty"
                             placeholder="Fuel QTY">
-                        <input type="text" class="form-control mb-2" id="editFuelFormat" name="fuel_format"
-                            placeholder="Fuel Format">
-                        <input type="text" class="form-control mb-2" id="editLavStatus" name="lav_status"
-                            placeholder="Lav Status">
-                        <input type="text" class="form-control mb-2" id="editLavType" name="lav_type"
-                            placeholder="Lav Type">
+
+                        <!-- Fuel Format (Dropdown) -->
+                        <div class="mb-2">
+                            <label for="editFuelFormat">Fuel Format</label>
+                            <select class="form-control" id="editFuelFormat" name="fuel_format">
+                                <option value="">-----</option>
+                                <option value="lbs">lbs</option>
+                                <option value="kgs">kgs</option>
+                                <option value="gallons">gallons</option>
+                            </select>
+                        </div>
+
+                        <!-- Lav Status (Dropdown) -->
+                        <div class="mb-2">
+                            <label for="editLavStatus">Lav Status</label>
+                            <select class="form-control" id="editLavStatus" name="lav_status">
+                                <option value="">-----</option>
+                                <option value="fwr">Fwr</option>
+                                <option value="aft">Aft</option>
+                                <option value="fwr_aft">Both</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+
+
+                        <!-- Lav Type (Dropdown) -->
+                        <div class="mb-2">
+                            <label for="editLavType">Lav Type</label>
+                            <select class="form-control" id="editLavType" name="lav_type">
+                                <option value="">-----</option>
+                                <option value="full">Full</option>
+                                <option value="dump">Dump</option>
+                                <option value="rinse">Rinse</option>
+                            </select>
+                        </div>
+
+                        <!-- Lav Gallons -->
                         <input type="text" class="form-control mb-2" id="editLavGallons" name="lav_gallons"
                             placeholder="Lav Gal.">
-                        <input type="text" class="form-control mb-2" id="editWaterServiceStatus"
-                            name="water_service_status" placeholder="Water Status">
-                        <input type="text" class="form-control mb-2" id="editGpuStatus" name="gpu_status"
-                            placeholder="GPU">
-                        <input type="text" class="form-control mb-2" id="editTransportationStatus"
-                            name="transportation_status" placeholder="Transp.">
+
+                        <!-- Water Service Status (Dropdown) -->
+                        <div class="mb-2">
+                            <label for="editWaterServiceStatus">Water Service Status</label>
+                            <select class="form-control" id="editWaterServiceStatus" name="water_service_status">
+                                <option value="">-----</option>
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+
+                        <!-- GPU Status (Dropdown) -->
+                        <div class="mb-2">
+                            <label for="editGpuStatus">GPU Status</label>
+                            <select class="form-control" id="editGpuStatus" name="gpu_status">
+                                <option value="">-----</option>
+                                <option value="stage">Stage</option>
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+
+                        <!-- Transportation Status (Dropdown) -->
+                        <div class="mb-2">
+                            <label for="editTransportationStatus">Transportation Status</label>
+                            <select class="form-control" id="editTransportationStatus" name="transportation_status">
+                                <option value="">-----</option>
+                                <option value="personal">Personal</option>
+                                <option value="driver">Driver</option>
+                                <option value="rental">Rental</option>
+                                <option value="self-park">Self Park</option>
+                                <option value="Ride Share">Ride Share</option>
+                            </select>
+                        </div>
+
+                        <!-- PIC -->
                         <input type="text" class="form-control mb-2" id="editPic" name="pic" placeholder="PIC">
-                        <input type="text" class="form-control mb-2" id="editCatering" name="catering_status"
-                            placeholder="Cat.">
+
+                        <!-- Catering Status (Dropdown) -->
+                        <div class="mb-2">
+                            <label for="editCatering">Catering Status</label>
+                            <select class="form-control" id="editCatering" name="catering_status">
+                                <option value="">-----</option>
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+
+                        <!-- Catering Number -->
                         <input type="text" class="form-control mb-2" id="editCateringNumber" name="catering_number"
                             placeholder="Cat. #">
-                        <input type="text" class="form-control mb-2" id="editVacuumStatus" name="vacuum_status"
-                            placeholder="Vacuum">
-                        <input type="text" class="form-control mb-2" id="editOilStatus" name="oil_status"
-                            placeholder="Oil">
+
+                        <!-- Vacuum Status (Dropdown) -->
+                        <div class="mb-2">
+                            <label for="editVacuumStatus">Vacuum Status</label>
+                            <select class="form-control" id="editVacuumStatus" name="vacuum_status">
+                                <option value="">-----</option>
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+
+                        <!-- Oil Status (Dropdown) -->
+                        <div class="mb-2">
+                            <label for="editOilStatus">Oil Status</label>
+                            <select class="form-control" id="editOilStatus" name="oil_status">
+                                <option value="">-----</option>
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+
+                        <!-- Oil Type -->
                         <input type="text" class="form-control mb-2" id="editOilType" name="oil_type"
                             placeholder="Oil Type">
+
+                        <!-- Oil QTY -->
                         <input type="number" class="form-control mb-2" id="editOilQty" name="oil_qty"
                             placeholder="Oil QTY">
-                        <input type="text" class="form-control mb-2" id="editLadderStatus" name="ladder_status"
-                            placeholder="Ladder">
+
+                        <!-- Ladder Status (Dropdown) -->
+                        <div class="mb-2">
+                            <label for="editLadderStatus">Ladder Status</label>
+                            <select class="form-control" id="editLadderStatus" name="ladder_status">
+                                <option value="">-----</option>
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+
+                        <!-- Notes -->
                         <input type="text" class="form-control mb-2" id="editNotes" name="notes" placeholder="Notes">
+
+                        <!-- Created At -->
                         <input type="datetime-local" class="form-control mb-2" id="created_at" name="created_at"
-                            placeholder="Created At">
+                            placeholder="Created at">
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -268,10 +423,12 @@
 
             // Edit button click event
             $('#notesTable tbody').on('click', '.edit-btn', function () {
+                var noteId = $(this).data('note-id'); // Retrieve the note ID
+                $('#editNoteForm').data('note-id', noteId);
                 currentNoteId = $(this).data('note-id');
                 $('#editNoteForm #editTailNumber').val($(this).data('tail-number'));
                 $('#editNoteForm #editStatus').val($(this).data('status'));
-                $('#editNoteForm #editServiceTime').val($(this).data('service-time'));
+                $('#editNoteForm #editServiceTime').val($(Date).data('service-time'));
                 $('#editNoteForm #editAircraftModel').val($(this).data('aircraft-model'));
                 $('#editNoteForm #editLocation').val($(this).data('location'));
                 $('#editNoteForm #editEta').val($(this).data('eta'));
@@ -301,23 +458,16 @@
 
             // Save edit button click event
             $('#saveEditButton').on('click', function () {
-                // Example validation for a required field
-                if ($('#editTailNumber').val().trim() === '') {
-                    alert('Tail Number is required');
-                    return false;
-                }
-                if ($('#created_at').val().trim() === '') {
-                    alert('Created At is required');
-                    return false;
-                }
-                if ($('#editServiceTime').val().trim() === '') {
-                    alert('Service Time is required');
-                    return false;
-                }
                 var formData = new FormData($('#editNoteForm')[0]);
-                console.log(Array.from(formData));
+                var noteId = $('#editNoteForm').data('note-id'); // Retrieve the note ID
+
+                if (!noteId) {
+                    alert('Note ID is undefined or not found');
+                    return;
+                }
+
                 $.ajax({
-                    url: `/edit-note/${currentNoteId}/`,
+                    url: `/edit-note/${noteId}/`, // Use noteId in the URL
                     type: 'POST',
                     processData: false,
                     contentType: false,
