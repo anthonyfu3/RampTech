@@ -119,11 +119,11 @@ class AircraftNote(models.Model):
 
 
 
-    tail_number = models.CharField(max_length=10)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
-    service_time = models.DateTimeField()
-    location = models.CharField(max_length=30, choices=LOCATION_CHOICES)
-    aircraft_model = models.CharField(max_length=50)
+    tail_number = models.CharField(max_length=10 ,null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES ,null=True, blank=True)
+    service_time = models.DateTimeField(verbose_name='Service Time' ,null=True, blank=True)
+    location = models.CharField(max_length=30, choices=LOCATION_CHOICES ,null=True, blank=True)
+    aircraft_model = models.CharField(max_length=50 ,null=True, blank=True)
     eta = models.DateTimeField(verbose_name='Estimated Time of Arrival', null=True, blank=True)
     etd = models.DateTimeField(verbose_name='Estimated Time of Departure', null=True, blank=True)
     passenger_count = models.IntegerField(null=True, blank=True)
@@ -146,4 +146,4 @@ class AircraftNote(models.Model):
     ladder_status = models.CharField(max_length=10, choices=LADDER_STATUS_CHOICES, null=True, blank=True)
     vacuum_status = models.CharField(max_length=10, choices=VACUUM_STATUS_CHOICES, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=timezone.now ,null=True, blank=True)

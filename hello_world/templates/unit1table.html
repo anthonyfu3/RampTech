@@ -63,31 +63,7 @@
             <td>{{ note.oil_qty }}</td>
             <td>{{ note.ladder_status }}</td>
             <td>{{ note.notes }}</td>
-            <td><button class="btn btn-secondary edit-btn" data-note-id="{{ note.id }}"
-                    data-tail-number="{{ note.tail_number }}" 
-                    data-status="{{ note.status }}"
-                    data-service-time="{{ note.service_time }}"
-                    data-aircraft-model="{{ note.aircraft_model }}" 
-                    data-location="{{ note.location }}"
-                    data-eta="{{ note.eta }}" 
-                    data-etd="{{ note.etd }}"
-                    data-passenger-count="{{ note.passenger_count }}" 
-                    data-fuel-type="{{ note.fuel_type }}"
-                    data-fuel-qty="{{ note.fuel_qty }}" 
-                    data-fuel-format="{{ note.fuel_format }}"
-                    data-lav-status="{{ note.lav_status }}" 
-                    data-lav-type="{{ note.lav_type }}"
-                    data-lav-gallons="{{ note.lav_gallons }}"
-                    data-water-service-status="{{ note.water_service_status }}" data-gpu-status="{{ note.gpu_status }}"
-                    data-transportation-status="{{ note.transportation_status }}" data-pic="{{ note.pic }}"
-                    data-catering="{{ note.catering_status }}" 
-                    data-catering-number="{{ note.catering_number }}"
-                    data-vacuum-status="{{ note.vacuum_status }}" 
-                    data-oil-status="{{ note.oil_status }}"
-                    data-oil-type="{{ note.oil_type }}" 
-                    data-oil-qty="{{ note.oil_qty }}"
-                    data-ladder-status="{{ note.ladder_status }}" 
-                    data-notes="{{ note.notes }}">Edit</button></td>
+            <td><button class="btn btn-secondary edit-btn" data-note-id="{{ note.id }}" ... >Edit</button>
         </tr>
         {% endfor %}
     </tbody>

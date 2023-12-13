@@ -37,19 +37,51 @@ def add_data(request):
 
 def unit1_notes_table(request):
     notes = AircraftNote.objects.all()
-    return render(request, 'unit1table.html', {'notes': notes})
+    context = {
+        'notes': notes,
+        'status_choices': AircraftNote.STATUS_CHOICES,
+        'location_choices': AircraftNote.LOCATION_CHOICES,
+        'fuel_format_choices': AircraftNote.FUEL_FORMAT_CHOICES,
+        'fuel_type_choices': AircraftNote.FUEL_TYPE_CHOICES,
+        'lav_status_choices': AircraftNote.LAV_STATUS_CHOICES,
+        'lav_type_choices': AircraftNote.LAV_TYPE_CHOICES,
+        'water_service_status_choices': AircraftNote.WATER_SERVICE_STATUS_CHOICES,
+        'gpu_status_choices': AircraftNote.GPU_STATUS_CHOICES,
+        'transportation_status_choices': AircraftNote.TRANSPORTATION_STATUS_CHOICES,
+        'catering_status_choices': AircraftNote.CATERING_STATUS_CHOICES,
+        'customer_type_choices': AircraftNote.CUSTOMER_TYPE_CHOICES,
+        'oil_status_choices': AircraftNote.OIL_STATUS_CHOICES,
+        'ladder_status_choices': AircraftNote.LADDER_STATUS_CHOICES,
+        'vacuum_status_choices': AircraftNote.VACUUM_STATUS_CHOICES,
+    }
+    return render(request, 'unit1table.html', context)
 
 @require_POST
-@csrf_exempt
 def edit_note(request, note_id):
     note = get_object_or_404(AircraftNote, pk=note_id)
-    form = AircraftNoteForm(request.POST, instance=note)
+
+    # Create a form instance with POST data, but don't bind it to the note instance yet
+    form = AircraftNoteForm(request.POST)
+
+    # Create a dictionary to hold updated data
+    updated_data = {}
+
+    # Loop through the form fields
+    for field in form.fields:
+        if field in request.POST and request.POST[field].strip():
+            # Add only non-empty fields to the updated_data
+            updated_data[field] = request.POST[field]
+
+    # Now bind the form with updated_data and the note instance
+    form = AircraftNoteForm(updated_data, instance=note)
+
     if form.is_valid():
         form.save()
         return JsonResponse({'status': 'success'})
     else:
-        print(form.errors)  # Add this line to log form errors
         return JsonResponse({'status': 'error', 'errors': form.errors})
+
+
 
 @require_POST
 def delete_note(request, note_id):
