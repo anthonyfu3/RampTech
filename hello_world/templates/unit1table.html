@@ -36,16 +36,28 @@
     <tbody>
         {% for note in notes %}
         <tr>
-            <td>{{ note.created_at }}</td>
+            <td>{{ note.created_at|date:"m/d H:i" }}</td>
             <td>{{ note.tail_number }}</td>
             <td>{{ note.get_status_display }}</td>
-            <td>{{ note.service_time }}</td>
+            <td>
+                {% if note.status == 'incoming' or note.status == 'quickturn' %}
+                    {{ note.eta|date:"m/d H:i" }}
+                {% elif note.status == 'departing' %}
+                    {{ note.etd|date:"m/d H:i" }}
+                {% elif note.status == 'off_ramp' %}
+                    {{ note.eta|date:"m/d H:i" }}
+                {% elif note.status == 'standby' or note.status == 'maintenance' %}
+                    {{ note.etd|date:"m/d H:i" }}
+                {% elif note.status == 'overnight' %}
+                    {{ note.etd|date:"m/d H:i" }}
+                {% endif %}
+            </td>
             <td>{{ note.aircraft_model }}</td>
-            <td>{{ note.location }}</td>
-            <td>{{ note.eta }}</td>
-            <td>{{ note.etd }}</td>
+            <td>{{ note.get_location_display }}</td>
+            <td>{{ note.eta|date:"m/d H:i" }}</td>
+            <td>{{ note.etd|date:"m/d H:i" }}</td>
             <td>{{ note.passenger_count }}</td>
-            <td>{{ note.fuel_type }}</td>
+            <td>{{ note.get_fuel_type_display }}</td>
             <td>{{ note.fuel_qty }}</td>
             <td>{{ note.fuel_format }}</td>
             <td>{{ note.lav_status }}</td>

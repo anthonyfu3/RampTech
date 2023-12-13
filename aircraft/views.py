@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
+@login_required
 def aircraft_note_create(request):
     if request.method == 'POST':
         form = AircraftNoteForm(request.POST)
@@ -22,7 +23,7 @@ def aircraft_note_list(request):
     notes = AircraftNote.objects.all()
     return render(request, 'your_list_template.html', {'notes': notes})
 
-
+@login_required
 def add_data(request):
     if request.method == 'POST':
         form = AircraftNoteForm(request.POST)
@@ -35,6 +36,7 @@ def add_data(request):
     form = AircraftNoteForm()  # An unbound form for GET request
     return render(request, 'index.html', {'form': form})
 
+@login_required
 def unit1_notes_table(request):
     notes = AircraftNote.objects.all()
     context = {
@@ -56,6 +58,7 @@ def unit1_notes_table(request):
     }
     return render(request, 'unit1table.html', context)
 
+@login_required
 @require_POST
 def edit_note(request, note_id):
     note = get_object_or_404(AircraftNote, pk=note_id)
@@ -82,7 +85,7 @@ def edit_note(request, note_id):
         return JsonResponse({'status': 'error', 'errors': form.errors})
 
 
-
+@login_required
 @require_POST
 def delete_note(request, note_id):
     note = get_object_or_404(AircraftNote, pk=note_id)
